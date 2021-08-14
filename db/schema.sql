@@ -28,5 +28,5 @@ CREATE TABLE employees (
     job_title VARCHAR(40) NOT NULL,
     departments_name VARCHAR(35) NOT NULL,
     salary int, 
-    name_of_manager
+    name_of_manager VARCHAR(35) NOT NULL
 )
