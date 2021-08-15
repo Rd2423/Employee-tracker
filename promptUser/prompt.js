@@ -1,7 +1,7 @@
 const inquirer = require("inquirer");
 const cTable = require("console.table");
 const inputCheck = require("../utils/inputCheck");
-const db = require("../db/db.sql");
+const db = require("../db/connection");
 
 const options = () => {
   return inquirer
@@ -24,7 +24,7 @@ const options = () => {
     .then(function (answer) {
       switch (answer.option) {
         case "View all departments":
-          db.viewAllDept();
+          viewAllDept();
           break;
         case "View all roles":
           viewAllRoles();
@@ -49,49 +49,48 @@ const options = () => {
 };
 
 const viewAllDept = () => {
-    return this.connection.promise.query(
+     this.connection.query(
         "SELECT department.id department.name"
     )
+    .then((data)=> console.log(data))
+    .then(() => options())
 };
 
 const viewAllRoles = () => {
-    return this.connection
-    .promise()
-    .query(
-        "SELECT role.title, role.id, role.salary, role.department_id"
-    )
+    return this.connection.query(
+        "SELECT * role"
+    ).then((data) => console.log(data))
+    .then(()=> options());
 };
 
 const viewAllEmployees = () => {
-  return this.connection
-    .promise()
-    .query(
-      "SELECT employee.id, employee.first_name, employee.last_name, role.title, department.name AS department, role.salary, CONCAT(manager.first_name, ' ',     manager.last_name) AS manager FROM employee LEFT JOIN role on employee.role_id = role.id LEFT JOIN department on role.department_id = department.id LEFT JOIN employee manager on manager.id = employee.manager_id;"
-    );
+  return this.connection.query(
+      "SELECT * employee;"
+    ).then((data) => console.log(data))
+    .then(() => options());
 };
 
 const addDepartments = () => {
-    return this.connection
-    .promise()
-    .query(
+    return this.connection.query(
         "INSERT INTO department(id, name) VALUES(?,?)"
-    )
+    ).then((data) => console.log(data))
+    .then(() => options());
 };
 
 const addRole = () => {
     return this.connection
-    .promise()
     .query(
         "INSERT INTO role(id, title, salary, department_id) VALUES(?,?,?,?)"
-    )
+    ).then((data) => console.log(data))
+    .then(() => options())
 };
 
 const addEmployee = () => {
     return this.connection
-    .promise()
     .query(
     "INSERT INTO employee(id, first_name, last_name, role_id, manager_id)"
-    )
+    ).then((data) => console.log(data))
+    .then(() => options())
 };
 
 const UpdateEmployee = () => {
@@ -99,6 +98,7 @@ const UpdateEmployee = () => {
     .promise()
     .query(
         "UPDATE employee.id SET role_id = '?' WHERE ID = '?'"
-    )
+    ).then((data) => console.log(data))
+    .then(() => options());
 };
 options()
