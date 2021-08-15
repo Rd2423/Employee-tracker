@@ -2,6 +2,7 @@ const inquirer = require("inquirer");
 const cTable = require("console.table");
 const inputCheck = require("../Employee-tracker1/utils/inputCheck");
 const db = require("../Employee-tracker1/db/connection");
+const { ADDRGETNETWORKPARAMS } = require("dns");
 
 const options = () => {
   return inquirer
@@ -52,7 +53,7 @@ const viewAllDept = () => {
      db.promise().query(
         "SELECT * FROM department"
     )
-    .then((data)=> console.table(data))
+    .then(([rows, fields]) => console.table(rows))
     .then(() => options())
     .catch((err) => console.log(err));
 };
@@ -60,7 +61,7 @@ const viewAllDept = () => {
 const viewAllRoles = () => {
     db.promise().query(
         "SELECT * FROM role"
-    ).then((data) => console.table(data))
+    ).then(([rows, fields]) => console.table(rows))
     .then(()=> options())
     .catch((err) => console.log(err));
 };
@@ -68,7 +69,7 @@ const viewAllRoles = () => {
 const viewAllEmployees = () => {
   db.promise().query(
       "SELECT * FROM employee"
-    ).then((data) => console.table(data))
+    ).then(([rows, fields]) => console.table(rows))
     .then(() => options())
     .catch((err) => console.log(err));
 };
@@ -76,17 +77,21 @@ const viewAllEmployees = () => {
 const addDepartments = (name) => {
     db.promise().query(
         "INSERT INTO department(name) VALUES(?)", [name]
-    ).then((data) => console.table(data))
+    )
     .then(() => options())
     .catch((err) => console.log(err));
 };
 
-const addRole = () => {
+const addRole = (title, salary, department_id) => {
     db.promise()
     .query(
-        "INSERT INTO role(id, title, salary, department_id) VALUES(?,?,?,?)"
-    ).then((data) => console.log(data))
-    .then(() => options())
+        "INSERT INTO role(title, salary, department_id) VALUES(?,?,?)",[
+          title,
+          salary,
+          department_id,
+        ]
+    ).then(() => options())
+    .catch((err) => console.log(err));
 };
 
 function addEmployee() {
