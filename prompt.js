@@ -1,8 +1,7 @@
-
 const inquirer = require("inquirer");
 const cTable = require("console.table");
 const inputCheck = require("../Employee-tracker1/utils/inputCheck");
-const db = require("./db/connection");
+const db = require("../Employee-tracker1/db/connection");
 
 const options = () => {
   return inquirer
@@ -46,27 +45,29 @@ const options = () => {
           UpdateEmployee();
           break;
       }
-    });
+    }).catch((err) => console.error(err));
 };
 
 const viewAllDept = () => {
-     this.connection.query(
-        "SELECT department.id department.name"
+     db.promise().query(
+        "SELECT * FROM department"
     )
-    .then((data)=> console.log(data))
+    .then((data)=> console.table(data))
     .then(() => options())
+    .catch((err) => console.log(err));
 };
 
 const viewAllRoles = () => {
-    return this.connection.query(
-        "SELECT * role"
-    ).then((data) => console.log(data))
-    .then(()=> options());
+    db.promise().query(
+        "SELECT * FROM role"
+    ).then((data) => console.table(data))
+    .then(()=> options())
+    .catch((err) => console.log(err));
 };
 
 const viewAllEmployees = () => {
   return this.connection.query(
-      "SELECT * employee;"
+      "SELECT * FROM employee"
     ).then((data) => console.log(data))
     .then(() => options());
 };
