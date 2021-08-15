@@ -83,14 +83,46 @@ const addDepartments = (name) => {
 };
 
 const addRole = (title, salary, department_id) => {
-    db.promise()
-    .query(
-        "INSERT INTO role(title, salary, department_id) VALUES(?,?,?)",[
-          title,
-          salary,
-          department_id,
-        ]
-    ).then(() => options())
+    // db.promise()
+    // .query(
+    //     `SELECT id, name FROM department`)
+    // ).then(([rows, fields]) => JSON.parse(JSON.stringify(rows)))
+    // .then((data) => {
+    //   const dp = data.map((department) => department.name);
+      inquirer
+          .prompt([
+            {
+              type: "input",
+              name: 'title',
+              message: 'what is the name of the role that you want to add to the system'
+            },
+            {
+              type: 'input',
+              name: 'salary',
+              message: 'what is the salary for this role?'
+            },
+            {
+              type: 'input',
+              name: 'roleid',
+              message: 'What is the role id'
+            }
+          ]).then((data) => {
+            db.query(
+              "INSERT INTO role SET ?",
+              {
+                title: data.title,
+                salary: data.salary,
+                department_id: data.roleid,
+              },
+              (err) => {
+                if (err) throw err;
+                console.log(`Added role to the database`)
+                options();
+              }
+            );
+          })
+    // })
+    .then(() => options())
     .catch((err) => console.log(err));
 };
 
