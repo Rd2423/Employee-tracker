@@ -1,0 +1,26 @@
+{
+  "name": "Employee-tracker1",
+  "version": "1.0.0",
+  "description": "",
+  "main": "prompt.js",
+  "dependencies": {
+    "console.table": "^0.10.0",
+    "inquirer": "^8.1.2",
+    "mysql2": "^2.3.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Rd2423/employee-tracker.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Rd2423/employee-tracker/issues"
+  },
+  "homepage": "https://github.com/Rd2423/employee-tracker#readme"
+}
