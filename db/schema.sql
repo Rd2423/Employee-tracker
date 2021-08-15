@@ -1,32 +1,30 @@
-DROP TABLE IF EXISTS departments;
-DROP TABLE IF EXISTS roles;
-DROP TABLE IF EXISTS employees;
+DROP DATABASE IF EXISTS employees;
+CREATE DATABASE employees;
 
+USE employees;
 
-CREATE TABLE departments (
-    id INTEGER AUTO_INCREMENT PRIMARY KEY,
-    departments_name VARCHAR(35) NOT NULL,
-    description TEXT
+CREATE TABLE department (
+  id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(30) UNIQUE NOT NULL
 );
 
-CREATE TABLE roles (
-    id INTEGER AUTO_INCREMENT PRIMARY KEY,
-    department_id INTEGER,
-    role_id INTEGER,
-    job_title VARCHAR(40) NOT NULL,
-    salary int,
-    CONSTRAINT dp_departments
-        FOREIGN KEY (department_id)
-        REFERENCES departments(id)
-        ON DELETE SET NULL
+CREATE TABLE role (
+  id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  title VARCHAR(30) UNIQUE NOT NULL,
+  salary DECIMAL UNSIGNED NOT NULL,
+  department_id INT UNSIGNED NOT NULL,
+  INDEX dep_ind (department_id),
+  CONSTRAINT fk_department FOREIGN KEY (department_id) REFERENCES department(id) ON DELETE CASCADE
 );
 
-CREATE TABLE employees (
-    id INTEGER AUTO_INCREMENT PRIMARY KEY,
-    first_name VARCHAR(12) NOT NULL, 
-    last_name VARCHAR(15) NOT NULL,
-    job_title VARCHAR(40) NOT NULL,
-    departments_name VARCHAR(35) NOT NULL,
-    salary int, 
-    name_of_manager VARCHAR(35) NOT NULL
-)
+CREATE TABLE employee (
+  id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  first_name VARCHAR(30) NOT NULL,
+  last_name VARCHAR(30) NOT NULL,
+  role_id INT UNSIGNED NOT NULL,
+  INDEX role_ind (role_id),
+  CONSTRAINT fk_role FOREIGN KEY (role_id) REFERENCES role(id) ON DELETE CASCADE,
+  manager_id INT UNSIGNED,
+  INDEX man_ind (manager_id),
+  CONSTRAINT fk_manager FOREIGN KEY (manager_id) REFERENCES employee(id) ON DELETE SET NULL
+);

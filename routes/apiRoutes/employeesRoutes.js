@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const db = require("../../db/connection");
 const inputCheck = require("../../utils/inputCheck");
+const { route } = require("./departmentsRoutes");
 
 router.get('/employees', (req, res) => {
     const sql = `SELECT * FROM employees`
@@ -81,3 +82,5 @@ router.put('/employee/:id', (req, res) => {
         }
     })
 })
+
+module.exports = router;

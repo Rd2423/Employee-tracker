@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const db = require("../../db/connection");
+const inputCheck = require("../../utils/inputCheck");
 
 router.get("/departments", (req, res) => {
   const sql = `SELECT * FROM departments`;
@@ -32,6 +33,31 @@ router.get("/department/:id", (req, res) => {
     });
   });
 });
+
+router.post('/department', ({body}, res) => {
+  const error = inputCheck(
+    body, 'departments_name', 'description'
+  );
+  if (error){
+    res.status(400).json({error: error});
+    return
+  }
+  const sql = `INSERT INTO departments (departments_name, description)`;
+  const params = [
+    body.departments_name, 
+    body.description
+  ];
+  db.query(sql, params, (err, result) => {
+    if (err) {
+      res.status(400).json({ error: err.message });
+      return;
+    }
+    res.json({
+      message: 'Department added to the database',
+      data: body
+    })
+  })
+})
 
 router.delete("/department/:id", (req, res) => {
   const sql = `DELETE FROM parties WHERE id = ?`;

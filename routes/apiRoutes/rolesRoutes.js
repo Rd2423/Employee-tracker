@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const db = require("../../db/connection");
 const inputCheck = require("../../utils/inputCheck");
+const { route } = require("./departmentsRoutes");
 
 router.get("/roles", (req, res) => {
   const sql = `SELECT roles.*, departments.departments_name
@@ -88,3 +89,5 @@ router.delete("/roles/:id", (req, res) => {
     }
   });
 });
+
+module.exports = router;

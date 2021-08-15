@@ -1,7 +1,8 @@
+
 const inquirer = require("inquirer");
 const cTable = require("console.table");
-const inputCheck = require("../utils/inputCheck");
-const db = require("../db/connection");
+const inputCheck = require("../Employee-tracker1/utils/inputCheck");
+const db = require("./db/connection");
 
 const options = () => {
   return inquirer
