@@ -10,4 +10,5 @@
 
 ### Technology's Used: NodeJS, Inquirer.js, SQL, Express.js and Ctable
 
-[Screen Shot 2021-08-18 at 1 05 14 AM](https://user-images.githubusercontent.com/78246665/129840258-fa600fa0-ba13-4e0a-8f19-df2b449b45b6.png)
+![Screen Shot 2021-08-18 at 1 07 26 AM](https://user-images.githubusercontent.com/78246665/129840439-dae1676d-d745-479c-b854-7805a92d2783.png)
+
